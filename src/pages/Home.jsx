@@ -10,12 +10,13 @@ import TimeLineSection from '../components/core/HomePage/TimeLineSection';
 import LearningLanguageSection from '../components/core/HomePage/LearningLanguageSection';
 import InstructorSection from '../components/core/HomePage/InstructorSection';
 import ExploreMore from '../components/core/HomePage/ExploreMore';
+import './Home.css'
 
 const Home = () => {
   return (
-    <div>
+    <div className='z-[0]'>
         {/*Section 1 */}
-        <div className='relative mx-auto flex flex-col w-9/12 items-center text-white justify-between max-w-maxContent'>
+        <div className='relative mx-auto flex flex-col w-9/12 items-center text-white justify-between max-w-maxContent min-h-screen'>
 
             <Link to={'/signup'}>{/*add shadowes */}
                 <div className='group mt-16 p-1 mx-auto rounded-full bg-richblack-800 font-bold text-richblack-200 transition-all duration-200 hover:scale-95 w-fit border-b-2 border-richblack-200'>
@@ -48,7 +49,7 @@ const Home = () => {
                 
             </div>
 
-            <div className='shadow-blue-200 mx-3 my-12'>
+            <div className='custom-shadow mx-3 my-12 w-[90%]'>
                  <video muted loop autoPlay>
                     <source src={Banner} type='video/mp4'></source>
                 </video>

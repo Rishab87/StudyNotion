@@ -29,7 +29,7 @@ app.use(
         credentials: true //iska matlab kya hai
         //explore aur kya add kr skte hai ismain
     })
-)
+) 
 
 dbConnect();
 cloudinaryConnect();
