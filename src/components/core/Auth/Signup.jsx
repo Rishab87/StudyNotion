@@ -16,7 +16,7 @@ const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [formData , setFormData] = useState({email: "" , password: "" , accountType: "Instructor" , confirmPassword: "" , phoneNumber: "" , firstName: "" , lastName: "" , countryCode: 0});
+  const [formData , setFormData] = useState({email: "" , password: "" , accountType: "Instructor" , confirmPassword: "" , phoneNumber: "" , firstName: "" , lastName: ""});
 
   function changeHandler(event){
       const {name ,   value} = event.target;
@@ -37,6 +37,8 @@ const Signup = () => {
 
       dispatch(setSignUpData(formData));
       dispatch(sendOtp(formData.email , navigate));
+
+      setFormData({email: "" , password: "" , accountType: "Instructor" , confirmPassword: "" , phoneNumber: "" , firstName: "" , lastName: ""});      
       
   }
 
@@ -84,9 +86,11 @@ const Signup = () => {
                   <label htmlFor="phoneNumber" className='text-richblack-5 text-sm relative'>Phone Number<span className='absolute text-pink-400 top-0'>*</span></label>
                   <div className='flex w-full gap-2'>
                     <select name="countryCode" id="countryCode" className='bg-richblack-800 placeholder:text-richblack-200 border-b-2 border-richblack-300 rounded-md py-2 text-richblack-5 px-2 w-[9.6%]' onChange={changeHandler}>
-                        {countryCode.map((element , index)=>(
+                        {
+                          countryCode.map((element , index)=>(
                           <option value={element.code.split('+')[1]} key={index}>{element.code} {element.country}</option>
-                        ))}
+                          ))
+                        }
                     </select>
                     <input required name='phoneNumber' type='tel' id='phoneNumber' placeholder='Enter phone number' className='bg-richblack-800 placeholder:text-richblack-200 border-b-2 border-richblack-300 rounded-md py-2 text-richblack-5 px-2 w-[52%]' onChange={changeHandler}/>
 

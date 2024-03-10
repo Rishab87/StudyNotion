@@ -25,14 +25,14 @@ const Login = () => {
 
     function submitHandler(event){
         event.preventDefault();
-        dispatch(login(formData.email , formData.password));
-        navigate('/dashboard'); //dashboard app.js main add nhi kiya hai 
+        dispatch(login(formData.email , formData.password , navigate));
+         //dashboard app.js main add nhi kiya hai 
         //student ya instructor dash pe navigate uska logic dalo
     }
   return (
     <div className='flex flex-row justify-center items-center w-full h-[92.3vh] mx-20'>
         <div className='w-11/12 flex flex-row h-[80%] flex-wrap'>
-        <form action="" className='flex flex-col gap-8 h-full w-[50%]'>
+        <form onSubmit={submitHandler} className='flex flex-col gap-8 h-full w-[50%]'>
                 <div className='flex flex-col gap-2'>
                     <h1 className='text-[#F1F2FF] font-bold text-[1.5rem]'>Welcome Back</h1>
                     <div>
@@ -66,7 +66,7 @@ const Login = () => {
                     </Link>
                 </div>
 
-                <button className='bg-yellow-50 rounded-md py-2 w-[60%] hover:scale-90 duration-200 transition-all' onSubmit={submitHandler}>Sign in</button>
+                <button type='submit' className='bg-yellow-50 rounded-md py-2 w-[60%] hover:scale-90 duration-200 transition-all'>Sign in</button>
         </form>
 
             {/*Img */}

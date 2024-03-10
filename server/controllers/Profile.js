@@ -16,7 +16,7 @@ exports.updateProfile = async(req , res)=>{
                 success: false,
                 message: "Please fill the required fields",
             });
-        }
+        } 
 
         const userDetails = await User.findById(id);
         const profileId = userDetails.additionalDetails;
@@ -141,12 +141,12 @@ exports.updateDisplayPicture = async (req, res) => {
 
 exports.getEnrolledCourses = async (req, res) => {
     try {
-      const userId = req.user.id
-      const userDetails = await User.findOne({
-        _id: userId,
-      })
-        .populate("courses")
-        .exec()
+      const userDetails = req.user.populate('courses').exec();
+      // const userDetails = await User.findOne({
+      //   _id: userId,
+      // })
+      //   .populate("courses")
+      //   .exec()
       if (!userDetails) {
         return res.status(400).json({
           success: false,
@@ -164,3 +164,15 @@ exports.getEnrolledCourses = async (req, res) => {
       })
     }
 };
+
+exports.contactUs = async(req, res)=>{
+  try{
+    
+
+  } catch(error){
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}

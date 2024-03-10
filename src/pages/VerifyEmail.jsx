@@ -48,7 +48,8 @@ function VerifyEmail() {
 
   return (
     <div className="min-h-[calc(100vh-3.5rem)] grid place-items-center">
-      {loading ? (
+      {
+        loading ? (
         <div>
           <div className="spinner"></div>
         </div>
@@ -102,7 +103,8 @@ function VerifyEmail() {
             </button>
           </div>
         </div>
-      )}
+      )
+      }
     </div>
   );
 }

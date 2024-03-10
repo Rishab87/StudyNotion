@@ -18,6 +18,13 @@ const { auth } = require("../middlewares/auth")
 
 // Route for user login
 router.post("/login", login)
+router.post('/token-login' , auth , (req , res)=>{
+  return res.status(200).json({
+    success: true , 
+    message: "Data fetched for user successfully",
+    user: req.user,
+  })
+})
 
 // Route for user signup
 router.post("/signup", signup)

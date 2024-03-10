@@ -6,6 +6,7 @@ const courseRoutes = require('./routes/Course');
 const paymentRoutes = require('./routes/Payments');
 const profileRoutes = require('./routes/Profile');
 const userRoutes = require('./routes/User');
+const contactRoutes = require('./routes/Contact')
 const dbConnect = require('./config/database');
 const {cloudinaryConnect} = require('./config/cloudinary');
 const fileUploader = require('express-fileupload');
@@ -38,6 +39,7 @@ app.use('/api/v1/auth' ,userRoutes); //Yes, you can use multiple route handlers 
 app.use('/api/v1/profile' ,profileRoutes); 
 app.use('/api/v1/course' , courseRoutes);
 app.use('/api/v1/payment' , paymentRoutes);
+app.use('/api/v1/reach' , contactRoutes)
 
 //default route
 app.get('/' , (req , res)=>{
