@@ -14,9 +14,18 @@ import MyProfile from "./components/core/Dashboard/MyProfile";
 import PrivateRoute from './components/core/Auth/PrivateRoute'
 import Dashboard from "./pages/Dashboard";
 import Error from './pages/Error'
+import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
+import Cart from "./components/core/Dashboard/Cart/index";
+import { ACCOUNT_TYPE } from "./utils/constants";
+import { useDispatch, useSelector } from "react-redux";
+import AddCourse from "./components/core/Dashboard/AddCourse";
+import Settings from "./components/core/Dashboard/Settings";
 
 function App() {
-  //study about openRoute and implement
+
+  const dispatch = useDispatch();
+  const {user} = useSelector(state=> state.profile);
+
   return (
     <div className="w-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar/>
@@ -83,15 +92,31 @@ function App() {
           }>
 
           <Route path="dashboard/my-profile" element = {<MyProfile/>}/>
+          <Route path="/dashboard/settings" element = {<Settings/>}/>
 
+          {
+            user?.accountType === ACCOUNT_TYPE.STUDENT && (
+              <>
+                <Route path="dashboard/enrolled-courses" element= {<EnrolledCourses/>}/>
+                <Route path="dashboard/cart" element= {<Cart/>}/>
+              </>
+            )
+          }
+
+          {
+            user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+              <>
+                <Route path="dashboard/add-course" element= {<AddCourse/>}/>
+              </>
+            )
+          }
           </Route>
 
-
-
+{/*remove db call in auth middleware and add it in router login token */}
          <Route path="*" element={<Error/>}/>
       </Routes>
     </div> 
-    //HW: Settings page
+    //HW: Settings page , MyCourse page
   );
 }
 

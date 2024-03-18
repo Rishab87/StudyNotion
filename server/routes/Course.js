@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {createCourse  , getCourseDetails , showAllCourses} = require('../controllers/Course');
+const {createCourse  , getCourseDetails , showAllCourses, editCourse} = require('../controllers/Course');
 const {showAllCategories  , createCategory , categoryPageDetails} = require('../controllers/Categories');
 const {createSection , updateSection , deleteSection} = require('../controllers/Section');
 const {createRating , getAverageRating , getAllRating} = require('../controllers/ratingAndReview');
@@ -27,6 +27,10 @@ router.post("/addSubSection", auth, isInstructor, createSubSection)
 router.get("/getAllCourses", showAllCourses)
 // Get Details for a Specific Courses
 router.post("/getCourseDetails", getCourseDetails)
+
+//create editCourse
+router.put('/editCourse' ,auth , isInstructor ,  editCourse);
+
 
 // ********************************************************************************************************
 //                                      Category routes (Only by Admin)

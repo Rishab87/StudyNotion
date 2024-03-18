@@ -1,6 +1,7 @@
 // Import the required modules
 const express = require("express")
 const router = express.Router()
+const User = require('../models/User');
 
 // Import the required controllers and middleware functions
 const {
@@ -18,11 +19,12 @@ const { auth } = require("../middlewares/auth")
 
 // Route for user login
 router.post("/login", login)
-router.post('/token-login' , auth , (req , res)=>{
+router.post('/token-login' , auth , async(req , res)=>{
+  const user = await User.findById(req.user.id);
   return res.status(200).json({
     success: true , 
     message: "Data fetched for user successfully",
-    user: req.user,
+    user: user,
   })
 })
 

@@ -94,7 +94,12 @@ export function login(email , password , navigate){
             
 
         } catch(error){
-            toast.error(error.message);
+            if(error.response.status == 401){
+                toast.error("Wrong id or password");
+            }
+            else{
+                toast.error(error.message);
+            }
             console.log(error); 
         }
         dispatch(setLoading(false));
@@ -103,7 +108,7 @@ export function login(email , password , navigate){
     }
 }
 
-export function loginToken(token){
+export function loginToken(token , navigate){
     return async(dispatch)=>{
         const toastId = toast.loading("loading...");
         dispatch(setLoading(true));
@@ -114,15 +119,13 @@ export function loginToken(token){
                 throw new Error(response.data.message);
             }
 
-            // toast.success("Logged in successfully");
-
             const userImage = response.data?.user?.image
             ? response.data.user.image
             : `https://api.dicebear.com/7.x/pixel-art/svg?seed=${response.data.user.firstName}`
             dispatch(setUser({ ...response.data.user, image: userImage }))
 
         } catch(error){
-            toast.error(error.message);
+            dispatch(logout(navigate));
         }
 
         dispatch(setLoading(false));

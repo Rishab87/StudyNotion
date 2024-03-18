@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai"
 import { BsChevronDown } from "react-icons/bs"
 import { useDispatch, useSelector } from "react-redux"
-import { Link, matchPath, useLocation } from "react-router-dom"
+import { Link, matchPath, useLocation, useNavigate } from "react-router-dom"
 
 import logo from "../../assets/Logo/Logo-Full-Light.png"
 import { NavbarLinks } from "../../data/navbar-links"
@@ -19,6 +19,7 @@ function Navbar() {
   const location = useLocation()
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [subLinks, setSubLinks] = useState([])
   const [loading, setLoading] = useState(false)
@@ -29,8 +30,9 @@ function Navbar() {
       try {
         const res = await apiConnector("GET", categories.CATEGORIES_API)
         setSubLinks(res.data.allCategories)
+        
         if(token)
-          dispatch(loginToken(token))
+          dispatch(loginToken(token ,navigate))
       } catch (error) {
         console.log("Could not fetch Categories.", error)
       }

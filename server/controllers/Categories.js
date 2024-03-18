@@ -85,6 +85,3 @@ exports.categoryPageDetails = async(req, res)=>{
         });
     }
 }
-
-//HW: Contact Us wala form bnao normal html se usse data ko lo bache ko email data submit hogya aur apne ap ko mail kro uss data ke sath
-//HW: DONE: Create routes and index.js

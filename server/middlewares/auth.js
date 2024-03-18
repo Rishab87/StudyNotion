@@ -7,7 +7,6 @@ exports.auth = async(req, res, next)=>{
     try{
         //extract token
         const token = req.cookies.token || req.body.token || req.header("Authorisation").replace("Bearer " , "");
-
         //if token missing , return response
         if(!token){
             return res.status(401).json({
@@ -20,8 +19,7 @@ exports.auth = async(req, res, next)=>{
         try{
             const decode = jwt.verify(token , process.env.JWT_SECRET);
             console.log(decode);
-            const user = await User.findById(decode.id);
-            req.user = user;
+            req.user = decode;
         } catch(error){
             return res.status(401).json({
                 success: false,
@@ -33,7 +31,7 @@ exports.auth = async(req, res, next)=>{
 
     } catch(error){
         console.error(error);
-        return res.status(401).json({
+        return res.status(500).json({
             success: false,
             message: "Something went wrong while validating the token",
         });
@@ -44,6 +42,7 @@ exports.auth = async(req, res, next)=>{
 //isStudent 
 exports.isStudent = async(req, res , next)=>{
     try{
+        console.log(req.user);
         if(req.user.accountType !== "Student"){
             return res.status(401).json({
                 success:false,

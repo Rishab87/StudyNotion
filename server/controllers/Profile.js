@@ -141,12 +141,11 @@ exports.updateDisplayPicture = async (req, res) => {
 
 exports.getEnrolledCourses = async (req, res) => {
     try {
-      const userDetails = req.user.populate('courses').exec();
-      // const userDetails = await User.findOne({
-      //   _id: userId,
-      // })
-      //   .populate("courses")
-      //   .exec()
+      
+      const userDetails = await User.findById(decode.id).populate("courses");
+
+      console.log(userDetails);
+      
       if (!userDetails) {
         return res.status(400).json({
           success: false,
@@ -158,6 +157,7 @@ exports.getEnrolledCourses = async (req, res) => {
         data: userDetails.courses,
       })
     } catch (error) {
+      console.log(error.message);
       return res.status(500).json({
         success: false,
         message: error.message,

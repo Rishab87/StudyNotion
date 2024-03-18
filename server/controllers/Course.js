@@ -8,11 +8,11 @@ exports.createCourse = async(req , res)=>{
     try{
 
         //yeh log in hone ke baad hi create kr skte hai course toh id agar chahiye user ki toh id toh req main middleware main add krdiya tha req.user = decode 
-        const {courseName , courseDescription , whatYouWillLearn , price , category} = req.body;
+        const {courseName , courseDescription , whatYouWillLearn , price , category , tag} = req.body;
         const thumbnail = req.files.thumbnailImage;
 
         //validation
-        if(!courseName || ! courseDescription || !whatYouWillLearn || !price || !category || !thumbnail){
+        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !category || !thumbnail || !tag){
             return res.status(400).json({
                 success: false,
                 message: "All fields are required",
@@ -50,6 +50,7 @@ exports.createCourse = async(req , res)=>{
             instructor: userId,
             whatYouWillLearn,
             price,
+            tag,
             Category: categoryDetails._id,
             thumbnail: thumbnailImage.secure_url,
         });
@@ -145,6 +146,41 @@ exports.getCourseDetails = async(req , res)=>{
         return res.status(500).json({
             success: false , 
             message: "An error occured while fetching course details",
+            error: error.message,
+        });
+    }
+}
+
+exports.editCourse = async(req , res)=>{
+    try{
+        const {courseId} = req.body;
+
+        const course = Course.findById(courseId);
+
+        //add edit image code
+        const {courseName = course.courseName , courseDescription =course.courseDescription , price = course.price , whatYouWillLearn = course.whatYouWillLearn , category =course.category , instructions =course.instructions , status = course.status} = req.body;
+
+
+        const updatedCourse = await Course.findByIdAndUpdate({_id: courseId} , {
+            courseName , 
+            courseDescription , 
+            price,
+            whatYouWillLearn , 
+            category,
+            instructions , 
+            status
+        });
+
+        return res.status(200).json({
+            success: true , 
+            message: "Course updated successfully",
+            updatedCourse,
+        });
+
+    } catch(error){
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong while editing the course",
             error: error.message,
         });
     }

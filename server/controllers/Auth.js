@@ -210,7 +210,7 @@ exports.login = async(req ,res)=>{
                 accountType: user.accountType,
             }
             const token = jwt.sign(payload , process.env.JWT_SECRET , {
-                expiresIn: "2h",
+                expiresIn: "24h",
             });
             user.token = token;
             user.password = undefined;
@@ -220,12 +220,15 @@ exports.login = async(req ,res)=>{
                 httpOnly: true,
                 expires: new Date(Date.now() + 3*24*60*60*1000), //3days
             }
+
+            req.user = user; //ab auth middleware lgane ki zrurat nhi pdegi enrolled courses main kyunki first time login pe bhi req ki body main user details hongi
             res.cookie("token" , token , options).status(200).json({
                 success: true,
                 token,
                 user,
                 message: "Logged In Successfully",
             });
+
         }
         else{
             return res.status(401).json({

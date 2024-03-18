@@ -65,9 +65,10 @@ exports.getAverageRating  = async(req, res)=>{
     try{
         const {courseId} = req.body; //HW: find out what is aggregate
         const result = await RatingAndReview.aggregate([
-            {
+            {   
+                //why mongoose.Types.ObjectId showing deprecated
                 $match:{
-                    course: new mongoose.Types.ObjectId(courseId), //rating and review ke andar aisi entry dhunke do jismain match kr rhi hai yeh courseId
+                    course: new mongoose.ObjectId(courseId), //rating and review ke andar aisi entry dhunke do jismain match kr rhi hai yeh courseId
                 }, //yeh kiya taki iss course ke liye jitne review hai woh ajaye
             },
             {
