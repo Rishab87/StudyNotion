@@ -31,5 +31,5 @@ const courseSlice = createSlice({
     }
 });
 
-export const {setCourse , setEditCourse , setPaymentLoading , setSteps , resetCourseState} = courseSlice.actions;
+export const {setCourse , setEditCourse , setPaymentLoading , setSteps , resetCourseState , setSection} = courseSlice.actions;
 export default courseSlice.reducer;

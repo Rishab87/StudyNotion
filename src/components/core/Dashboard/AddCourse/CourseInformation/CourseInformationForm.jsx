@@ -24,7 +24,7 @@ const CourseInformationForm = () => {
 
     const dispatch = useDispatch();
 
-    const {course , editCourse} = useSelector(state=> state.course);
+    const {course , editCourse} = useSelector(state=> state.addCourse);
     const {token} = useSelector(state=> state.auth);
     const [loading , setLoading] = useState(false);
 

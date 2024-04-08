@@ -1,6 +1,12 @@
 //flow iss trah hi ki tags(ab categories hai yeh aur tags ab comma seperated string hai idhr category ka code hai) sirf admin bna skte hai , ki yeh yeh courses hone chahiye instructor choose kr skta hai tag kis category ka uska course hai 
 const Category = require('../models/Categories');
 
+function getRandomInt(max) {
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max));
+}
+
+
 exports.createCategory = async(req , res)=>{
     try{
         const {name, description} = req.body;
@@ -52,36 +58,79 @@ exports.showAllCategories = async(req , res)=>{
 //to display all courses in that category
 //category ke andar courses ka array hai
 exports.categoryPageDetails = async(req, res)=>{
-    try{
-        const {categoryId} = req.body;
-
-        const selectedCategory = await Category.findById(categoryId).populate("courses").exec();
-
-        if(!selectedCategory){
-            return res.status(404).json({
-                success: false,
-                message: "Data not found",
-            });
+    try {
+        const { categoryId } = req.body;
+        console.log("PRINTING CATEGORY ID: ", categoryId);
+        // Get courses for the specified category
+        const selectedCategory = await Category.findById(categoryId)
+          .populate({
+            path: "courses",
+            match: { status: "Published" },
+            populate: "ratingAndReview",
+          })
+          .exec()
+    
+        //console.log("SELECTED COURSE", selectedCategory)
+        // Handle the case when the category is not found
+        if (!selectedCategory) {
+          console.log("Category not found.")
+          return res
+            .status(404)
+            .json({ success: false, message: "Category not found" })
         }
-               
-        const differentCategories = await Category.find({_id: {$ne: categoryId}}).populate('courses').exec(); //aisi categories ka data ajayega jo iss category id ke equal nhi hai
-
-        //HW: top 10 selling courses --> agar koi course jitne baar bik chuka hai uske basis pr courses ko sort krke show kre woh krna hai,  jismain sbsezyada studentsEnrolled honge uske basis pe sort?
-
-        return res.status(200).json({
-            success: true,
-            data: {
-                selectedCategory,
-                differentCategories,
-                //topselling courses bhi dalo after fetching
-            },
-        });
-
-    } catch(error){
+        // Handle the case when there are no courses
+        if (selectedCategory.courses.length === 0) {
+          console.log("No courses found for the selected category.")
+          return res.status(404).json({
+            success: false,
+            message: "No courses found for the selected category.",
+          })
+        }
+    
+        // Get courses for other categories
+        const categoriesExceptSelected = await Category.find({
+          _id: { $ne: categoryId },
+        })
+        console.log("CATEGORIES EXPECTED" , categoriesExceptSelected);
+        let differentCategory = await Category.findOne(
+          categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]
+            ._id
+        )
+          .populate({
+            path: "courses",
+            match: { status: "Published" },
+          })
+          .exec()
+          console.log("Different COURSE", differentCategory)
+        // Get top-selling courses across all categories
+        const allCategories = await Category.find()
+          .populate({
+            path: "courses",
+            match: { status: "Published" },
+            populate: {
+              path: "instructor",
+          },
+          })
+          .exec()
+        const allCourses = allCategories.flatMap((category) => category.courses)
+        const mostSellingCourses = allCourses
+          .sort((a, b) => b.sold - a.sold)
+          .slice(0, 10)
+         console.log("mostSellingCourses COURSE", mostSellingCourses)
+        res.status(200).json({
+          success: true,
+          data: {
+            selectedCategory,
+            differentCategory,
+            mostSellingCourses,
+          },
+        })
+      } catch (error) {
+        console.log(error.message);
         return res.status(500).json({
-            success: true , 
-            message: "Something went wrong while fetching courses in that category",
-            error: error.message,
-        });
-    }
+          success: false,
+          message: "Internal server error",
+          error: error.message,
+        })
+      }
 }

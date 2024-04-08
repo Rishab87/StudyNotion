@@ -2,6 +2,7 @@
 //HW: tags ko har jagah category se replace kre --> DONE
 const Section = require('../models/Section');
 const Course = require('../models/Course');
+const { mediaDeleter } = require('../utils/mediaDeleter');
 
 //HW try it --> DONE
 //create section
@@ -47,7 +48,7 @@ exports.createSection = async(req ,res)=>{
 exports.deleteSection = async(req , res)=>{
     try{
         //HW: TEst with params
-        const {sectionId , courseId} = req.params; //assuming we are sending id in params
+        const {sectionId , courseId} = req.body; //assuming we are sending id in params
 
         if(!sectionId){
             return res.status(400).json({
@@ -58,12 +59,24 @@ exports.deleteSection = async(req , res)=>{
         //HW: delete krne pr course main array auto update hogya usmain se bhi section automatically delete hogya why? Findout..
         //TODO: do we need to delete the entry of section in courseContent array?(we will do in testing)
         //   await Course.findByIdAndUpdate(courseId , {$pull:{courseContent: sectionId}});
-        await Section.findByIdAndDelete(sectionId);
+        
+        const deletedSection = await Section.findByIdAndDelete(sectionId).populate("subSection");
 
+        deletedSection.subSection.forEach((subSec)=>{
+            mediaDeleter(subSec.videoUrl.split('/').pop().split('.')[0]);
+        })
+
+        const courseUpdate = await Course.findByIdAndUpdate(courseId , {$pull:{courseContent: sectionId}} , {new: true}).populate({
+            path: 'courseContent',
+            populate: {
+                path: 'subSection',
+            },
+        });
 
         return res.status(200).json({
             success: true,
             message: "Section deleted successfully",
+            data: courseUpdate,
         });
 
     } catch(error){
@@ -88,10 +101,11 @@ exports.updateSection = async(req ,res)=>{
         }
 
         updatedSection = await Section.findByIdAndUpdate(sectionId, {sectionName} , {new: true});
-
+        
         return res.status(200).json({
             success: true,
             message: "Section updated successfully",
+            data: updatedSection,
         });
 
     } catch(error){

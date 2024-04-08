@@ -31,8 +31,9 @@ export const addCourseDetails = async(formData , token)=>{
         if(!response.data.success){
             throw new Error(response.data.message);
         }
-
+        console.log(response);
         result = response.data.data;
+        console.log(JSON.stringify(result));
         toast.success("Course created successfully");
         
     } catch(error){
@@ -57,7 +58,7 @@ export const editCourseDetails = async (data, token) => {
         throw new Error("Could Not Update Course Details")
       }
       toast.success("Course Details Updated Successfully")
-      result = response?.data?.data
+      result = response?.data?.updatedCourse
     } catch (error) {
       console.log("EDIT COURSE API ERROR............", error)
       toast.error(error.message)
@@ -89,4 +90,180 @@ export const fetchCourseDetails = async (courseId) => {
     toast.dismiss(toastId)
     //   dispatch(setLoading(false));
     return result
+}
+
+export const updateSection = async(data , token)=>{
+  let res = null;
+  const toastId = toast.loading("Loading...");
+  try{
+
+    const response = await apiConnector("POST" , courseEndpoints.UPDATE_SECTION_API , data , {
+      Authorisation: `Bearer ${token}`,
+    });
+
+    if(!response.data.success){
+      throw new Error("Could not update section");
+    }
+
+    toast.success("Course Section updated");
+    res = response.data.data;
+    
+  } catch(error){
+    console.log(error);
+    toast.error(error.message);
+  }
+
+  toast.dismiss(toastId);
+  return res;
+}
+
+export const createSection = async(data , token)=>{
+  let res = null;
+  const toastId = toast.loading('loading...');
+  try{
+    const response  = await apiConnector("POST" , courseEndpoints.CREATE_SECTION_API , data , {Authorisation: `Bearer ${token}`});
+
+    if(!response.data.success){
+      throw new Error(res.data.message);
+    }
+
+    toast.success("Section created successfully");
+
+    res = response.data.updatedCourse;
+
+  } catch(error){
+    console.log(error);
+    toast.error(error.message);
+  }
+
+  toast.dismiss(toastId);
+  return res;
+}
+
+export const deleteSection = async(data, token)=>{
+  const toastId = toast.loading("loading...");
+  let res  = null;
+  try{
+
+    const response = await apiConnector("POST" , courseEndpoints.DELETE_SECTION_API , data , {Authorisation: `Bearer ${token}`})
+
+    if(!response.data.success){
+      throw new Error(response.data.message);
+    }
+
+    res = response.data.data;
+
+    toast.success("Section deleted successfully");
+
+  }catch(error){
+    console.log(error);
+    toast.error(error.message);
+  }
+  toast.dismiss(toastId);
+  return res;
+}
+
+export const deleteSubSection = async(data, token)=>{
+  const toastId = toast.loading("loading...");
+  let res  = null;
+  try{
+
+    const response = await apiConnector("POST" , courseEndpoints.DELETE_SUBSECTION_API , data, {Authorisation: `Bearer ${token}`})
+
+    if(!response.data.success){
+      throw new Error(response.data.message);
+    }
+
+    res = response.data.data;
+    toast.success("Sub-Section deleted successfully");
+
+  }catch(error){
+    console.log(error);
+    toast.error(error.message);
+  }
+  toast.dismiss(toastId);
+  return res;
+}
+
+export const createSubSection = async(data, token)=>{
+  const toastId = toast.loading("loading...");
+  let res  = null;
+  try{
+
+    const response = await apiConnector("POST" , courseEndpoints.CREATE_SUBSECTION_API , data, {Authorisation: `Bearer ${token}`})
+
+    if(!response.data.success){
+      throw new Error(response.data.message);
+    }
+
+    res = response.data.data;
+    toast.success("Sub-Section created successfully");
+
+  }catch(error){
+    console.log(error);
+    toast.error(error.message);
+  }
+  toast.dismiss(toastId);
+  return res;
+}
+
+export const updateSubSection = async(data, token)=>{
+  const toastId = toast.loading("loading...");
+  let res  = null;
+  try{
+
+    const response = await apiConnector("POST" , courseEndpoints.UPDATE_SUBSECTION_API , data, {Authorisation: `Bearer ${token}`})
+
+    if(!response.data.success){
+      throw new Error(response.data.message);
+    }
+
+    res = response.data.data;
+    toast.success("Sub-Section created successfully");
+
+  }catch(error){
+    console.log(error);
+    toast.error(error.message);
+  }
+  toast.dismiss(toastId);
+  return res;
+}
+
+export const fetchInstructorCourses = async(token)=>{
+  const toastId = toast.loading("loading...");
+  let res  = null;
+  try{
+
+    const response = await apiConnector("GET" , courseEndpoints.GET_ALL_INSTRUCTOR_COURSES_API , {}, {Authorisation: `Bearer ${token}`})
+
+    if(!response.data.success){
+      throw new Error(response.data.message);
+    }
+
+    res = response.data.data;
+
+  }catch(error){
+    console.log(error);
+    toast.error(error.message);
+  }
+  toast.dismiss(toastId);
+  return res;
+}
+
+export const deleteCourse = async(data , token)=>{
+  const toastId = toast.loading("loading...");
+  let res  = null;  try{
+
+    const response = await apiConnector("POST" , courseEndpoints.DELETE_COURSE_API , data, {Authorisation: `Bearer ${token}`})
+
+    if(!response.data.success){
+      throw new Error(response.data.message);
+    }
+
+
+  }catch(error){
+    console.log(error);
+    toast.error(error.message);
+  }
+  toast.dismiss(toastId);
 }

@@ -23,7 +23,7 @@ const Thumbnail = ({name , register , errors , label}) => {
             <img src={imagePreview} alt="Preview" />
         }
         <label htmlFor="thumbnail">{label}</label>
-        <input id='thumbnail' type="file" accept='image/*' {...register(name)}
+        <input id='thumbnail' type="file" {...register(name , {required:true})}
             onChange={handleImageChange}
         />
         {

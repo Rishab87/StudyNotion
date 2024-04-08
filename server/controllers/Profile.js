@@ -142,7 +142,7 @@ exports.updateDisplayPicture = async (req, res) => {
 exports.getEnrolledCourses = async (req, res) => {
     try {
       
-      const userDetails = await User.findById(decode.id).populate("courses");
+      const userDetails = await User.findById(req.user.id).populate("courses");
 
       console.log(userDetails);
       
