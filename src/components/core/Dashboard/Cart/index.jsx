@@ -11,8 +11,7 @@ const Cart = () => {
     <div>
         <h1>Your Cart</h1>
         <p>{totalItems} Courses in Cart</p>
-
-        {total>0?
+        {totalItems>0?
             (<div>
                 <RenderCartCourses/>
                 <RenderTotalAmount/>

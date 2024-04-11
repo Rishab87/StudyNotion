@@ -20,6 +20,7 @@ const EnrolledCourses = () => {
   useEffect(()=>{
     getEnrolledCourses();
   } ,[]);
+
   return (
     <div>
 
@@ -27,7 +28,7 @@ const EnrolledCourses = () => {
         {
           !enrolledCourses? (<div>
             Loading...
-          </div>): !enrolledCourses.length? (<p>You have not enrolled in any course</p>):
+          </div>): enrolledCourses.length== 0? (<p>You have not enrolled in any course</p>):
           (
             <div>
               <div>
@@ -37,7 +38,7 @@ const EnrolledCourses = () => {
               </div>
               {
                 enrolledCourses.map((course , index)=>(
-                  <div>
+                  <div key={index}>
                     <div>
                       <img src={course.thumbnail} alt="course-thumbnail" />
                       <div>

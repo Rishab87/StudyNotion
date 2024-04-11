@@ -65,10 +65,13 @@ export const buyCourse = async (token , courses , userDetails , navigate , dispa
     })
 
     } catch(error){
-        toast.error("Failed to create order");
+        if(error.response.status === 500)
+            toast.error("Failed to create order");
+        else
+            toast.error("Student is already enrolled");
         console.log(error);
     }
-
+    
     toast.dismiss(toastId);
 };
 
