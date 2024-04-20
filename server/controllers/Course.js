@@ -3,6 +3,8 @@ const Category = require('../models/Categories');
 const User = require('../models/User');
 const {uploadImageToCloudinary} = require('../utils/imageUploader');
 const { mediaDeleter } = require('../utils/mediaDeleter');
+const convertSecondsToDuration = require('../utils/secToDuration');
+const CourseProgress = require('../models/CourseProgress')
 
 //create course handler function
 exports.createCourse = async(req , res)=>{
@@ -105,7 +107,6 @@ exports.showAllCourses = async(req , res)=>{
 //HW: getCourseDetais populate krake entire course detail deni hai ek course ke liye ek bhi objectId nhi hona chahiye sab populated
 exports.getCourseDetails = async(req , res)=>{
     try{    
-
         const {courseId} = req.body;
 
         if(!courseId){
@@ -138,11 +139,29 @@ exports.getCourseDetails = async(req , res)=>{
             });
         }
 
+        let totalDurationInSeconds = 0
+        courseDetails.courseContent.forEach((content) => {
+          content.subSection.forEach((subSec) => {
+            const timeDurationInSeconds = parseInt(subSec.totalDuration)
+            totalDurationInSeconds += timeDurationInSeconds
+          })
+        });
+    
+        const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
+
+        // let courseProgressCount = await CourseProgress.findOne({
+        //     courseID: courseId,
+        //     userId,
+        // });
+
+        
+
         return res.status(200).json({
             success: true , 
             message: "Fetched all course details successfully",
             data: courseDetails,
-
+            totalDuration,
+            // courseProgressCount: courseProgressCount?.completedVideos? courseProgressCount?.completedVideos : [],
         });
 
     } catch(error){
@@ -252,8 +271,9 @@ exports.deleteCourse = async(req , res)=>{
         });
 
         //do we need to delete section and subSection sepereatley
-        //unenroll students
-
+        //yes
+        //unenroll students from the course
+        
     } catch(error){
         return res.status(500).json({
             success: false,

@@ -10,12 +10,12 @@ require('dotenv').config();
 exports.createSubSection = async(req, res)=>{
     try{
 
-        const {sectionId , title  , description , courseId} = req.body;
+        const {sectionId , title  , description , courseId , totalDuration} = req.body;
 
         //extract vidoe file
         const video = req.files.videoFile;
         //upload to cloudinary
-        if(!sectionId || !title || !description || !video){
+        if(!sectionId || !title || !description || !video || !totalDuration){
             return res.status(400).json({
                 success: false , 
                 message: "All fields are required",
@@ -24,7 +24,7 @@ exports.createSubSection = async(req, res)=>{
 
         const uploadDetails = await uploadImageToCloudinary(video , process.env.FOLDER_NAME);
         
-        const subSectionDetails = await SubSection.create({title , description , videoUrl: uploadDetails.secure_url});
+        const subSectionDetails = await SubSection.create({title , description , videoUrl: uploadDetails.secure_url , totalDuration ,});
 
         const updatedSection = await Section.findByIdAndUpdate({_id: sectionId} , {$push:{subSection: subSectionDetails._id}} , {new: true}).populate('subSection');
 

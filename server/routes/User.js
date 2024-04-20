@@ -20,7 +20,7 @@ const { auth } = require("../middlewares/auth")
 // Route for user login
 router.post("/login", login)
 router.post('/token-login' , auth , async(req , res)=>{
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user.id).populate('courseProgress');
   return res.status(200).json({
     success: true , 
     message: "Data fetched for user successfully",

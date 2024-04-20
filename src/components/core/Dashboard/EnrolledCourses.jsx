@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { getUserEnrolledCourses } from '../../../services/operations/profileAPI';
 import ProgressBar from '@ramonak/react-progress-bar';
+import { useNavigate } from 'react-router-dom';
 
 const EnrolledCourses = () => {
 
@@ -21,6 +22,8 @@ const EnrolledCourses = () => {
     getEnrolledCourses();
   } ,[]);
 
+  const navigate = useNavigate();
+
   return (
     <div>
 
@@ -38,7 +41,7 @@ const EnrolledCourses = () => {
               </div>
               {
                 enrolledCourses.map((course , index)=>(
-                  <div key={index}>
+                  <div className='cursor-pointer' key={index} onClick={()=> navigate(`view-course/${course._id}/section/${course.courseContent?.[0]?._id}/sub-section/${course.courseContent?.[0]?.subSection?.[0]?._id}`)}>
                     <div>
                       <img src={course.thumbnail} alt="course-thumbnail" />
                       <div>

@@ -105,8 +105,10 @@ const BuyCourse = () => {
       createdAt,
     } = courseData.data;
 
+    console.log(courseData);
+
   return (
-    <div className='h-[92.3vh] flex flex-col items-center text-white'>
+    <div className=' h-fit flex flex-col items-center text-white'>
 
       <div className='relative flex items-center justify-start flex-col'>
         <p>{courseName}</p>
@@ -149,6 +151,7 @@ const BuyCourse = () => {
             <div>
               <span>{courseContent.length} section(s)</span>
               <span>{totalNoOfLecture} lectures</span>
+              <span>{courseData.totalDuration}</span>
             </div>
             {/*Add total duration after adding in sub-section schema and find a way to find length of videos to send to backend*/}
 

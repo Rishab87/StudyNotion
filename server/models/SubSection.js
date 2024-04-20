@@ -10,9 +10,9 @@ const subSectionSchema = new mongoose.Schema({
     videoUrl:{
         type: String,
     },
-    // totalDuration:{
-    //     type: String,
-    // }add this
+    totalDuration:{
+        type: String,
+    },
 });
 
 module.exports = mongoose.model("SubSection" , subSectionSchema);

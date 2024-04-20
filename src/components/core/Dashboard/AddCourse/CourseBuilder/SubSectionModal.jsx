@@ -16,6 +16,8 @@ const SubSectionModal = ({
   edit = false,
 }) => {
 
+  const [videoDuration , setVideoDuration] = useState(null);
+
   const {
     register , 
     handleSubmit , 
@@ -65,6 +67,7 @@ const SubSectionModal = ({
     if(currentValues.lectureVideo !== modalData.lectureVideo){
       formData.append("video" , currentValues.lectureVideo);
     }
+    formData.append("totalDuration" , videoDuration);
 
     setLoading(true);
     
@@ -101,7 +104,8 @@ const SubSectionModal = ({
     formData.append("sectionId" , modalData);
     formData.append("title" , data.lectureTitle);
     formData.append("description" , data.lectureDesc);
-    formData.append("videoFile" , data.lectureVideo[0]);
+    formData.append("videoFile" , data.lectureVideo);
+    formData.append("totalDuration" , videoDuration);
     setLoading(true);
 
     const result = await createSubSection(formData , token);
@@ -114,6 +118,8 @@ const SubSectionModal = ({
       const updatedCourse = {...course , courseContent: updatedCourseContent};
       dispatch(setCourse(updatedCourse));
     }
+
+    console.log(videoDuration);
     setModalData(null);
     setLoading(false);
   }
@@ -139,6 +145,7 @@ const SubSectionModal = ({
             video= {true}
             viewData = {view? modalData.videoUrl: null}
             editData = {edit? modalData.videoUrl: null}
+            setVideoDuration = {setVideoDuration}
           />
           <div>
             <label htmlFor="lectureTitle">Lecture Title</label>

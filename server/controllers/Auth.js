@@ -134,7 +134,7 @@ exports.signup = async(req, res)=>{
         });
     } else if(otp !== recentOtp[0].otp){
         //invalid otp
-        return res.status(400).json({ //agar dhang se sort kra hai toh iski bhi zarurat nhi pdna chahiye?
+        return res.status(400).json({ 
             success: false,
             message: "Invalid OTP",
         })
@@ -194,7 +194,7 @@ exports.login = async(req ,res)=>{
         }
 
         //user exists
-        const user = await User.findOne({email});
+        const user = await User.findOne({email}).populate("courseProgress");
         if(!user){
             return res.status(401).json({
                 success: false,
@@ -226,8 +226,8 @@ exports.login = async(req ,res)=>{
                 success: true,
                 token,
                 user,
-                message: "Logged In Successfully",
-            });
+                message: "Logged In ",
+            });Successfully
 
         }
         else{

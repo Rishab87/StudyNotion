@@ -95,7 +95,7 @@ async function verfiyPayment(bodyData , token , navigate , dispatch){
 
         toast.success("Payment successfull");
 
-        navigate('dashboard/enrolled-courses');
+        navigate('/dashboard/enrolled-courses');
         dispatch(resetCart());
 
     } catch(error){

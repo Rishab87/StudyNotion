@@ -73,7 +73,6 @@ exports.capturePayment = async(req, res)=>{
 
 }
 
-//use webhook for more security
 exports.verifyPayment = async(req, res)=>{
     const razorpay_order_id = req.body.razorpay_order_id;
     const razorpay_payment_id = req.body.razorpay_payment_id;
@@ -167,7 +166,7 @@ exports.sendPaymentSuccessEmail = async(req , res)=>{
     try{
         const enrolledStudent  = await User.findById(userId);
 
-        await mailSender(`Payment Recieved` , sendPaymentSuccessEmail(enrolledStudent.firstName , amount/100 , orderId , paymentId));
+        await mailSender(enrolledStudent.email ,  `Payment Recieved` , sendPaymentSuccessEmail(enrolledStudent.firstName , amount/100 , orderId , paymentId));
 
         return res.status(200).json({
             success: true,
@@ -178,7 +177,7 @@ exports.sendPaymentSuccessEmail = async(req , res)=>{
         return res.status(500).json({
             success: false,
             message: error.message,
-        });
+        }); 
     }
 }
 

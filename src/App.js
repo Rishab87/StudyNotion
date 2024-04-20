@@ -24,6 +24,7 @@ import MyCourses from "./components/core/Dashboard/MyCourses";
 import EditCourse from "./components/core/Dashboard/EditCourse";
 import Catalog from "./pages/Catalog";
 import BuyCourse from "./components/core/Catalog/CoursePage/BuyCourse";
+import ViewCourse from "./pages/ViewCourse";
 
 function App() {
 
@@ -89,7 +90,21 @@ function App() {
         />  
         <Route path="/contact" element={<Contact />} />
         <Route path="/catalog/:catalogName" element={<Catalog/>}/>
-        <Route path="catalog/:catalogName/courses/:id" element={<BuyCourse/>}/>
+        <Route path="/catalog/:catalogName/courses/:id" element={<BuyCourse/>}/>
+
+        <Route element={
+          <PrivateRoute>
+            <ViewCourse/>
+          </PrivateRoute>
+        }>
+          {
+            user?.accountType === ACCOUNT_TYPE.STUDENT &&(
+              <>
+                {/* <Route path="view-course/:courseId/section/:sectionId/sub-section" element={<VideoDetails/>}/> */}
+              </>
+            )
+          }
+        </Route>
 
           <Route element={
             <PrivateRoute>

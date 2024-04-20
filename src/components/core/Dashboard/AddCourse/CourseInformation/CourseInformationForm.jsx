@@ -121,7 +121,7 @@ const CourseInformationForm = () => {
       formData.append("category" , data.courseCategory);
       formData.append("instructions" , JSON.stringify(data.courseRequirements));
       formData.append("tag" , data.courseTags);
-      formData.append("thumbnailImage" , data.courseImage[0]);
+      formData.append("thumbnailImage" , data.courseImage);
       formData.append("status" , COURSE_STATUS.DRAFT);
       console.log(formData);
 
