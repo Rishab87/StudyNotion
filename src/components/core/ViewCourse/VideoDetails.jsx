@@ -15,7 +15,7 @@ const VideoDetails = () => {
     const dipatch = useDispatch();
     const playerRef = useRef();
     const {token} = useSelector(state=> state.auth);
-    const {completedLectures , courseSectionData , courseEntireData} = useSelector(state=> state.course);
+    const {completedLectures , totalNoOfLectures  , courseSectionData , courseEntireData} = useSelector(state=> state.course);
 
     const [videoData , setVideoData] = useState([]);
     const [loading , setLoading] = useState(false);
@@ -112,6 +112,10 @@ const VideoDetails = () => {
     }
 
     const handleLectureCompletion = async()=>{
+        if((completedLectures.length/totalNoOfLectures)*100 === 100){
+            toast.success("Course Completed");
+            return;
+        }
         setLoading(true);
 
         //write markLectureAsComplete function
@@ -137,7 +141,7 @@ const VideoDetails = () => {
                             videoEnded && (
                                 <div>
                                     {
-                                        !completedLectures.includes(subSectionId) && !isLastVideo && (
+                                        !completedLectures.includes(subSectionId) && (
                                             <IconBtn
                                                 disabled={loading}
                                                 onclick = {()=> handleLectureCompletion()}
