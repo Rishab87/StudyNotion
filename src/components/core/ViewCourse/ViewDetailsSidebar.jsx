@@ -40,6 +40,7 @@ const ViewDetailsSidebar = ({setReviewModal}) => {
     } ,[location.pathname , courseEntireData , courseSectionData] );
 
     console.log(courseSectionData)
+    // console.log((completedLectures.length/totalNoOfLectures)*100)
 
   return (
     <>
@@ -55,7 +56,7 @@ const ViewDetailsSidebar = ({setReviewModal}) => {
                         onclick={()=> setReviewModal(true)}
                         />
                     </div>
-                    <ProgressBar completed={(completedLectures/totalNoOfLectures)*100}/>
+                    <ProgressBar completed={(completedLectures.length/totalNoOfLectures)*100}/>
                 </div>
 
                 <div>

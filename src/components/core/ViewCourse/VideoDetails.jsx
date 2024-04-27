@@ -137,7 +137,7 @@ const VideoDetails = () => {
                             videoEnded && (
                                 <div>
                                     {
-                                        !completedLectures.includes(subSectionId) && (
+                                        !completedLectures.includes(subSectionId) && !isLastVideo && (
                                             <IconBtn
                                                 disabled={loading}
                                                 onclick = {()=> handleLectureCompletion()}
