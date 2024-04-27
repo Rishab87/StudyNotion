@@ -227,7 +227,7 @@ exports.login = async(req ,res)=>{
                 token,
                 user,
                 message: "Logged In ",
-            });Successfully
+            });
 
         }
         else{

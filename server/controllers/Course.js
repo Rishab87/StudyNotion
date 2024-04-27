@@ -149,10 +149,10 @@ exports.getCourseDetails = async(req , res)=>{
     
         const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
 
-        // let courseProgressCount = await CourseProgress.findOne({
-        //     courseID: courseId,
-        //     userId,
-        // });
+        let courseProgressCount = await CourseProgress.findOne({
+            courseID: courseId,
+            userId: req.user.id,
+        }).populate('completedVideos').exec();
 
         
 
@@ -161,7 +161,7 @@ exports.getCourseDetails = async(req , res)=>{
             message: "Fetched all course details successfully",
             data: courseDetails,
             totalDuration,
-            // courseProgressCount: courseProgressCount?.completedVideos? courseProgressCount?.completedVideos : [],
+            courseProgressCount: courseProgressCount?.completedVideos || [],
         });
 
     } catch(error){
@@ -278,6 +278,57 @@ exports.deleteCourse = async(req , res)=>{
         return res.status(500).json({
             success: false,
             message: "Something went wrong while deleting the course",
+            error: error.message,
+        });
+    }
+}
+
+exports.markLectureAsComplete = async(req , res)=>{
+    try{
+
+        const {courseId , subSectionId} = req.body;
+ 
+        if(!courseId || !subSectionId){
+            return res.status(400).json({
+                success: false,
+                message: "All fields are required",
+            });
+        }
+
+        const courseProgress = await CourseProgress.findOneAndUpdate({
+            courseID: courseId,
+            userId: req.user.id,
+        } , {$push:{completedVideos: subSectionId}} , {new:true});
+
+        if(!courseProgress){
+            const newCourseProgress = await CourseProgress.create({
+                courseID: courseId,
+                userId: req.user.id,
+                completedVideos: [subSectionId],
+            });
+
+            const updateUser = await User.findByIdAndUpdate({_id: req.user.id} , {$push:{courseProgress: newCourseProgress._id}} , {new: true});
+
+            return res.status(200).json({
+                success: true,
+                message: "Lecture marked as complete",
+                data: newCourseProgress,
+            });
+        
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Lecture marked as complete",
+            data: courseProgress,
+        });
+
+
+
+    } catch(error){
+        return res.status(500).json({
+            success: false,
+            message: "Failed to mark lecture as complete",
             error: error.message,
         });
     }

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {createCourse  , getCourseDetails , showAllCourses, editCourse, getInstructorCourses} = require('../controllers/Course');
+const {createCourse  , getCourseDetails , showAllCourses, editCourse, getInstructorCourses , markLectureAsComplete} = require('../controllers/Course');
 const {showAllCategories  , createCategory , categoryPageDetails} = require('../controllers/Categories');
 const {createSection , updateSection , deleteSection} = require('../controllers/Section');
 const {createRating , getAverageRating , getAllRating} = require('../controllers/ratingAndReview');
@@ -26,7 +26,7 @@ router.post("/addSubSection", auth, isInstructor, createSubSection)
 // Get all Registered Courses
 router.get("/getAllCourses", showAllCourses)
 // Get Details for a Specific Courses
-router.post("/getCourseDetails", getCourseDetails)
+router.post("/getCourseDetails", auth , getCourseDetails)
 
 router.get('/getInstructorCourses' ,auth , isInstructor ,  getInstructorCourses);
 
@@ -50,5 +50,7 @@ router.post("/getCategoryPageDetails", categoryPageDetails)
 router.post("/createRating", auth, isStudent, createRating)
 router.get("/getAverageRating", getAverageRating)
 router.get("/getReviews", getAllRating)
+
+router.post("/updateCourseProgress" , auth , markLectureAsComplete);
 
 module.exports = router;

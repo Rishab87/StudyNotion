@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     courseProgress:{
-        type: mongoose.Schema.Types.ObjectId,
+        type: [mongoose.Schema.Types.ObjectId],
         ref: "CourseProgress",
     },
     token:{
