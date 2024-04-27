@@ -11,6 +11,7 @@ import LearningLanguageSection from '../components/core/HomePage/LearningLanguag
 import InstructorSection from '../components/core/HomePage/InstructorSection';
 import ExploreMore from '../components/core/HomePage/ExploreMore';
 import './Home.css'
+import ReviewerSlider from '../components/common/ReviewerSlider';
 
 const Home = () => {
   return (
@@ -162,11 +163,12 @@ const Home = () => {
 
 
         {/*Section 3 */}
-        <div className='w-11/12 mx-auto max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white'>
+        <div className='w-11/12 mx-auto max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white mb-6'>
                 <InstructorSection/>
 
-                <h2 className='text-center text-4xl font-semibold mt-10'>Review From Other Learners</h2>
+                <h2 className='text-center text-4xl font-semibold mt-10 mb-6'>Review From Other Learners</h2>
                 {/*Review Slider */}
+                <ReviewerSlider/>
         </div>
 
         {/*Section 4 */}

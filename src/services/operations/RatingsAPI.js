@@ -43,3 +43,26 @@ export const createRating = async(data, token)=>{
     }
     toast.dismiss(toastId);
 }
+
+export const getRatings = async()=>{
+    let ratings = [];
+
+    try{
+
+        const res = await apiConnector("GET" , ratingsEndpoints.GET_REVIEWS_API
+         , {});
+
+         if(!res.data.success){
+             throw new Error(res.data.message);
+         }
+
+         ratings = res.data.data;
+
+    } catch(error){
+        console.log(error);
+        toast.error(error.message);
+    }
+
+    return ratings;
+
+}

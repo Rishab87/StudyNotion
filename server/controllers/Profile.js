@@ -4,6 +4,7 @@ const User = require('../models/User');
 const cron = require('node-cron');
 const Course = require('../models/Course');
 const {uploadImageToCloudinary} = require('../utils/imageUploader');
+// const CourseProgress = require('../models/CourseProgress');
 
 exports.updateProfile = async(req , res)=>{
     try{

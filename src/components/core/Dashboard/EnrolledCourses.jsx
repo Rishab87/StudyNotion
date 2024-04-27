@@ -54,13 +54,13 @@ const EnrolledCourses = () => {
                       {course?.totalDuration}
                     </div>
 
-                    <div>
+                    {/* <div>
                       <p>Progress: {course.progressPercentage || 0}</p>
                       <ProgressBar completed={course.progressPercentage || 0}
                         height='8px'
                         isLabelVisible = {false}
                       />
-                    </div>
+                    </div> */}
 
                   </div>
                 ))
