@@ -11,6 +11,7 @@ import { categories } from "../../services/apis"
 import { ACCOUNT_TYPE } from "../../utils/constants"
 import ProfileDropdown from "../core/Auth/ProfileDropDown"
 import { loginToken } from "../../services/operations/authAPI"
+import Gemini from "./Gemini"
 
 function Navbar() {
   const { token } = useSelector((state) => state.auth)
@@ -131,6 +132,7 @@ function Navbar() {
               )}
             </Link>
           )}
+          <Gemini/>
           {token === null && (
             <Link to="/login">
               <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100">

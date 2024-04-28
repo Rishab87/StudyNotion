@@ -14,7 +14,7 @@ const ReviewerSlider = () => {
         const fetchRatings = async()=>{
             const response = await getRatings();
             setRatings(response);
-            console.log(response);
+            // console.log(response);
         }
 
         fetchRatings();
