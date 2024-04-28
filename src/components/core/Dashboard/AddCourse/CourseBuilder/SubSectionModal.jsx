@@ -4,8 +4,8 @@ import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCourse } from '../../../../../slices/courseSlice';
 import { createSubSection ,updateSubSection } from '../../../../../services/operations/courseDetailsAPI';
-import { RxCross1 } from 'react-icons/rx';
-import Thumbnail from '../CourseInformation/Thumbnail'
+import { RxCross2 } from 'react-icons/rx';
+import Upload from '../CourseInformation/Thumbnail'
 import IconBtn from '../../../../common/IconBtn';
 
 const SubSectionModal = ({
@@ -126,60 +126,82 @@ const SubSectionModal = ({
 
 
   return (
-    <div>
-
-      <div>
-        <div>
-          <p>{view && "Viewing"}{add && "Adding"}{edit && "Editing"} Lecture</p>
-          <button onClick={()=> (!loading ? setModalData(null): {})}>
-            <RxCross1/>
-          </button>
-        </div>
-        <form onSubmit={handleSubmit(submitHandler)}>
-          <Thumbnail
-            name={"lectureVideo"}
-            label={"Lecture Video"}
-            register={register}
-            setValue = {setValue}
-            errors={errors}
-            video= {true}
-            viewData = {view? modalData.videoUrl: null}
-            editData = {edit? modalData.videoUrl: null}
-            setVideoDuration = {setVideoDuration}
-          />
-          <div>
-            <label htmlFor="lectureTitle">Lecture Title</label>
-            <input type='text' id='lectureTitle' placeholder='Enter Lecture Title' {...register("lectureTitle" , {required:true})} className='w-full'/>
-            {
-              errors.lectureTitle && (
-                <span>Lecture Title is Required*</span>
-              )
-            }
-          </div>
-
-          <div>
-            <label htmlFor="lectureDescription">Lecture Description</label>
-            <input type='text' id='lectureDescription' placeholder='Enter Lecture Description' {...register("lectureDesc" , {required:true})} className='w-full min-h-[130px]'/>
-            {
-              errors.lectureDesc && (
-                <span>Lecture Description is Required*</span>
-              )
-            }
-          </div>
-          {
-            !view && (
-              <div>
-                <IconBtn
-                  type={'submit'}
-                  text= {loading? "loading...": edit? "Save Changes": "Save"}
-                />
-              </div>
-            )
-          }
-        </form>
+    <div className="fixed inset-0 z-[1000] !mt-0 grid h-screen w-screen place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
+    <div className="my-10 w-11/12 max-w-[700px] rounded-lg border border-richblack-400 bg-richblack-800">
+      {/* Modal Header */}
+      <div className="flex items-center justify-between rounded-t-lg bg-richblack-700 p-5">
+        <p className="text-xl font-semibold text-richblack-5">
+          {view && "Viewing"} {add && "Adding"} {edit && "Editing"} Lecture
+        </p>
+        <button onClick={() => (!loading ? setModalData(null) : {})}>
+          <RxCross2 className="text-2xl text-richblack-5" />
+        </button>
       </div>
-
+      {/* Modal Form */}
+      <form
+        onSubmit={handleSubmit(submitHandler)}
+        className="space-y-8 px-8 py-10"
+      >
+        {/* Lecture Video Upload */}
+        <Upload
+          name="lectureVideo"
+          label="Lecture Video"
+          register={register}
+          setValue={setValue}
+          errors={errors}
+          video={true}
+          viewData={view ? modalData.videoUrl : null}
+          editData={edit ? modalData.videoUrl : null}
+          setVideoDuration={setVideoDuration}
+        />
+        {/* Lecture Title */}
+        <div className="flex flex-col space-y-2">
+          <label className="text-sm text-richblack-5" htmlFor="lectureTitle">
+            Lecture Title {!view && <sup className="text-pink-200">*</sup>}
+          </label>
+          <input
+            disabled={view || loading}
+            id="lectureTitle"
+            placeholder="Enter Lecture Title"
+            {...register("lectureTitle", { required: true })}
+            className="form-style w-full"
+          />
+          {errors.lectureTitle && (
+            <span className="ml-2 text-xs tracking-wide text-pink-200">
+              Lecture title is required
+            </span>
+          )}
+        </div>
+        {/* Lecture Description */}
+        <div className="flex flex-col space-y-2">
+          <label className="text-sm text-richblack-5" htmlFor="lectureDesc">
+            Lecture Description{" "}
+            {!view && <sup className="text-pink-200">*</sup>}
+          </label>
+          <textarea
+            disabled={view || loading}
+            id="lectureDesc"
+            placeholder="Enter Lecture Description"
+            {...register("lectureDesc", { required: true })}
+            className="form-style resize-x-none min-h-[130px] w-full"
+          />
+          {errors.lectureDesc && (
+            <span className="ml-2 text-xs tracking-wide text-pink-200">
+              Lecture Description is required
+            </span>
+          )}
+        </div>
+        {!view && (
+          <div className="flex justify-end">
+            <IconBtn
+              disabled={loading}
+              text={loading ? "Loading.." : edit ? "Save Changes" : "Save"}
+            />
+          </div>
+        )}
+      </form>
     </div>
+  </div>
   )
 }
 

@@ -242,6 +242,7 @@ exports.getInstructorCourses = async(req , res)=>{
 exports.deleteCourse = async(req , res)=>{
     try{
         const {courseId} = req.body;
+        const userId = req.user.id;
 
         const deletedCourse = await Course.findByIdAndDelete(courseId).populate({
             path: 'courseContent',
@@ -249,6 +250,8 @@ exports.deleteCourse = async(req , res)=>{
                 path: 'subSection',
             }
         });
+
+        await User.findByIdAndUpdate({_id: userId} , {$pull:{courses: courseId}} , {new: true});
 
         if(!deletedCourse){
             return res.status(404).json({

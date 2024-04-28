@@ -43,13 +43,17 @@ const ViewCourse = () => {
 
   return (
 
-    <div className='h-[100vh] overflow-y-auto w-[100vw] flex'>
-          <ViewDetailsSidebar setReviewModal={setReviewModal}/>
-          <div>
-            <Outlet/>
-          </div>
-          {reviewModal && <CourseReviewModal setReviewModal={setReviewModal}/>}
+    <>
+    <div className="relative flex min-h-[calc(100vh-3.5rem)]">
+      <ViewDetailsSidebar setReviewModal={setReviewModal} />
+      <div className="h-[calc(100vh-3.5rem)] flex-1 overflow-auto">
+        <div className="mx-6">
+          <Outlet />
+        </div>
+      </div>
     </div>
+    {reviewModal && <CourseReviewModal setReviewModal={setReviewModal} />}
+  </>
   )
 }
 

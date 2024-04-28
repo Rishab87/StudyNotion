@@ -32,10 +32,12 @@ exports.updateProfile = async(req , res)=>{
 
         profileDetails.contactNumber = undefined //taki response mai na chle jaye phone no.
 
+        const updatedUserDetails = await User.findById(id).populate('additionalDetails');
+
         return res.status(200).json({
             success: true,
             message: "Profile updated successfully",
-            profileDetails,
+            data: updatedUserDetails,
         });
 
 
@@ -119,8 +121,8 @@ exports.updateDisplayPicture = async (req, res) => {
       const image = await uploadImageToCloudinary(
         displayPicture,
         process.env.FOLDER_NAME,
-        1000,
-        1000
+        2000,
+        2000
       )
       console.log(image)
       const updatedProfile = await User.findByIdAndUpdate(

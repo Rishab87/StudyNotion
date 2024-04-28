@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {createCourse  , getCourseDetails , showAllCourses, editCourse, getInstructorCourses , markLectureAsComplete} = require('../controllers/Course');
+const {createCourse  , getCourseDetails , showAllCourses, editCourse, getInstructorCourses , markLectureAsComplete, deleteCourse} = require('../controllers/Course');
 const {showAllCategories  , createCategory , categoryPageDetails} = require('../controllers/Categories');
 const {createSection , updateSection , deleteSection} = require('../controllers/Section');
 const {createRating , getAverageRating , getAllRating} = require('../controllers/ratingAndReview');
@@ -52,5 +52,6 @@ router.get("/getAverageRating", getAverageRating)
 router.get("/getReviews", getAllRating)
 
 router.post("/updateCourseProgress" , auth , markLectureAsComplete);
+router.post("/deleteCourse" , auth , deleteCourse);
 
 module.exports = router;

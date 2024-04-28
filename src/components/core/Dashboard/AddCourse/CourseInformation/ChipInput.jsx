@@ -31,18 +31,20 @@ const ChipInput = ({setValue , errors , register , label , name}) => {
 
   return (
     <div className='flex flex-col gap-y-2'>
-        <label htmlFor="tags">{label}<sup>*</sup></label>
-        {   tagList.length>0 &&
-
-            tagList.map((tag , index)=>(
-                <div key={index}>
-                    {tag}
-                    <IoIosClose onClick={()=>removeTag(index)}/>
-                </div>
-            ))
+        <label htmlFor="tags" className='text-white'>{label}<sup className='text-pink-400'>*</sup></label>
+        {   tagList.length>0 &&(
+            <div className='flex gap-2 flex-wrap'>
+                {tagList.map((tag , index)=>(
+                    <div key={index} className='bg-yellow-50 rounded-full w-fit h-fit p-2 flex gap-1 items-center'>
+                        {tag}
+                        <IoIosClose onClick={()=>removeTag(index)}/>
+                    </div>
+                ))}
+            </div>
+        )
         }
         {/*The onKeyDown event is typically triggered first because it is part of the initial sequence of keyboard events that occur when a key is pressed */}
-        <textarea id="tags" cols="50" rows="5" value={tag} onKeyDown={tagListHandler} onChange={(e)=> setTag(e.target.value)} placeholder='Enter tags'/>
+        <textarea id="tags" cols="50" rows="5" value={tag} onKeyDown={tagListHandler} onChange={(e)=> setTag(e.target.value)} placeholder='Enter tags' className='form-style'/>
         {
             errors.name && (
                 <span>{label} is Required*</span>

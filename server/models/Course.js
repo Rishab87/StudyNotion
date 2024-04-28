@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-//ache se dimag lgakr sochlo kya banana hai pura design krlo code krne main bohot kam time lgega
 const courseSchema = new mongoose.Schema({
     courseName:{
         type:String,
@@ -18,7 +17,6 @@ const courseSchema = new mongoose.Schema({
     whatYouWillLearn:{
         type:String,
     },
-    //sections ka reference courseContent ke name se hai
     courseContent:[
             {
                 type: mongoose.Schema.Types.ObjectId,
@@ -32,7 +30,7 @@ const courseSchema = new mongoose.Schema({
             ref: "RatingAndReview"
         }
     ],
-    price:{ //jidhr req true kra hai udhr phir shyd front end main bhi woh fields required krni pde uska dhyan rkhe
+    price:{ 
         type: Number,
         required:true,
     },

@@ -41,15 +41,15 @@ const CourseDetailsCard = ({course , setConfirmationModal , handleBuyCourse}) =>
     console.log(user);
     console.log(course.studentsEnrolled);
   return (
-    <div>
-        <img src={course.thumbnail} alt="thumbnail" className='max-h-[300px] min-h-[100px] w-[400px] rounded-xl' />
+    <div className='text-white font-bold flex flex-col items-center justify-center gap-2'>
+        <img src={course.thumbnail} alt="thumbnail" className='max-h-[300px] min-h-[100px] w-[280px] rounded-xl' />
 
         <div>
             Rs. {course.price}
         </div>
 
-        <div className='flex flex-col gap-y-6'>
-            <button className='bg-yellow-50' 
+        <div className='flex gap-x-3 gap-y-6'>
+            <button className='bg-yellow-50 rounded-md px-4 py-2 font-bold text-black' 
             onClick={
                 user && course?.studentsEnrolled.find((student) => student._id === user?._id)? ()=> navigate(`/dashboard/enrolled-courses`): handleBuyCourse
             }>
@@ -62,16 +62,15 @@ const CourseDetailsCard = ({course , setConfirmationModal , handleBuyCourse}) =>
             { 
                 //check even after buying course its still showing
                 (user && !course?.studentsEnrolled.find((student) => student._id === user?._id)) && (
-                    <button className='bg-yellow-50' onClick={handleAddToCart}>
+                    <button className='bg-yellow-50 px-4 py-2 rounded-md text-black' onClick={handleAddToCart}>
                         Add to Cart
                     </button>
                 )
             }
         </div>
 
-        <div>
+        <div className='flex gap-1'>
             <p>30-Day Money-Back Guarantee</p>
-            <p>This Course Includes:</p>
             <div className='flex flex-col gap-y-3'>
                 {
                     course?.instructions.map((item , index)=>{

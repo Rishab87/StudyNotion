@@ -23,7 +23,10 @@ export default function UpdatePassword() {
   const submitPasswordForm = async (data) => {
     // console.log("password Data - ", data)
     try {
-      await changePassword(token, data)
+      const formData = new FormData();
+      formData.append("password", data.oldPassword);
+      formData.append("newPassword", data.newPassword);
+      await changePassword(token, formData);
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message)
     }

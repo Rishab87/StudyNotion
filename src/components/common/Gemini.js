@@ -114,8 +114,8 @@ const Gemini = () => {
                 {
                   chat.image == GeminiLogo?(
                     <TypeAnimation
-                  sequence={[chat.text , 500]}
-                
+                  sequence={[chat.text , 5000]}
+                  speed={100}
                   style={{ 
                     whiteSpace:'pre-line',
                     display: 'block'

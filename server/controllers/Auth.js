@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const mailSender = require('../utils/mailSender');
 const validator = require('validator');
-const passMailTemplate = require('../mail/templates/passwordUpdate');
+const {passwordUpdated} = require('../mail/templates/passwordUpdate');
 
 //sendOTP
 exports.sendOTP = async (req, res)=>{
@@ -173,7 +173,8 @@ exports.signup = async(req, res)=>{
     } catch(error){
         return res.status(500).json({
             success: false,
-            message: "User cannot be registered. Please try again"
+            message: "User cannot be registered. Please try again",
+            error: error.message,
         })
     }
  
@@ -194,7 +195,7 @@ exports.login = async(req ,res)=>{
         }
 
         //user exists
-        const user = await User.findOne({email}).populate("courseProgress");
+        const user = await User.findOne({email}).populate("courseProgress").populate("additionalDetails");
         if(!user){
             return res.status(401).json({
                 success: false,
@@ -253,10 +254,10 @@ exports.changePassword = async(req , res)=>{
     try{
 
         //fetch data
-        const {email , password , newPassword  , confirmNewPassword} = req.body;
+        const {password , newPassword} = req.body;
 
         //get oldPassword , newPassword , confirmNewPassword
-        const user = User.findOne({email});
+        const user = await User.findOne({_id: req.user.id});
 
         //validation
         if(!user){
@@ -275,21 +276,14 @@ exports.changePassword = async(req , res)=>{
             });
         }
 
-        if(newPassword !== confirmNewPassword){
-            return res.status(400).json({
-                success: false,
-                message: "Passwords do not match",
-            });
-        }
-
-        //update pwd in db 
+        //update pwd in db  
         //add genSalt for more security
-        hashedPassword = bcrypt.hash(newPassword , 10);
+        hashedPassword = await bcrypt.hash(newPassword , 10);
 
-        await User.findOneAndUpdate({email: email} , {password: hashedPassword} , {new: true});
+        await User.findOneAndUpdate({_id: req.user.id} , {password: hashedPassword} , {new: true});
 
         //send mail -pwd updated
-        mailSender(email , "Password Updated Successfully" , passMailTemplate(email , `Password updated successfully for ${user.firstName} ${user.lastName}`));
+        await mailSender(user.email , "Password Updated Successfully" , passwordUpdated(user.email , `Password updated successfully for ${user.firstName} ${user.lastName}`));
 
         //return res
         res.status(200).json({
@@ -301,7 +295,8 @@ exports.changePassword = async(req , res)=>{
         console.error(error);
         return res.status(500).json({
             success: false,
-            message: "Something went wrong while changing the password. Please try again."
+            message: "Something went wrong while changing the password. Please try again.",
+            error: error.message,
         })
     }
 }

@@ -5,8 +5,7 @@ import { useSelector } from 'react-redux'
 import ReactStars from 'react-rating-stars-component'
 import IconBtn from '../../common/IconBtn';
 import { createRating } from '../../../services/operations/RatingsAPI';
-import { IoIosCloseCircle } from "react-icons/io";
-
+import { RxCross2 } from 'react-icons/rx';
 
 const CourseReviewModal = ({setReviewModal}) => {
 
@@ -41,54 +40,71 @@ const CourseReviewModal = ({setReviewModal}) => {
 
   return (
 
-    <div className='text-white absolute h-[100vh] w-[100vw] z-10 flex items-center justify-center'>
-        <div className='absolute -z-10 bg-black opacity-50 backdrop-blur-sm inset-0 h-[100vh] w-[100vw]'></div>
-        <div className='flex flex-col justify-center items-center w-[25%] min-w-[300px]'>
-            <div className='flex justify-end w-full'>
-                <button onClick={()=> setReviewModal(false)} className='bg-white text-black font-bold rounded-md'>
-                    <IoIosCloseCircle fontSize={"1.5rem"}/>
-                </button>
-            </div>
-
-            <div className='flex flex-col justify-center items-center w-[30%] min-w-[350px]'>
-                <div className='flex flex-col justify-center items-center gap-4'>
-                    <img src={user.image} alt='user-image' className=' aspect-square w-[50px] rounded-full object-cover'/>
-                    <div className='flex flex-col justify-center items-center gap-2'>
-                        <p>{user.firstName} {user.lastName}</p>
-                        <p>Posting Publically</p>
-                    </div>
-                </div>
-
-                <form onSubmit={handleSubmit(onSubmit)} className='flex mt-6 items-center flex-col justify-center w-full gap-3'>
-                    <div className='flex flex-col justify-center items-center w-full gap-4'>
-                        <ReactStars 
-                        count={5}
-                        onChange={RatingChanged}
-                        size={24}
-                        activeColor={"#ffd700"}
-                        />
-
-                        <label htmlFor="courseExp">Add Your Experience</label>
-                        <textarea name="" id="courseExp" placeholder='Add your experience here' {...register("courseExperience" , {required: true})} className='form-style min-h-[130px] w-full text-black'></textarea>
-                        {
-                            errors.courseExperience && <span>This field is required <span>*</span></span>
-                        }
-                    </div>
-
-                    <div className='flex justify-between w-full'>
-                        <button onClick={()=> setReviewModal(false)} className=' bg-pink-400 rounded-md py-3 px-6'>
-                            Cancel
-                        </button>
-
-                        <IconBtn
-                            text='Save'
-                            type={"submit"}
-                        />
-                    </div>
-
-                </form>
-            </div>
+    <div className="fixed inset-0 z-[1000] !mt-0 grid h-screen w-screen place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
+      <div className="my-10 w-11/12 max-w-[700px] rounded-lg border border-richblack-400 bg-richblack-800">
+        {/* Modal Header */}
+        <div className="flex items-center justify-between rounded-t-lg bg-richblack-700 p-5">
+          <p className="text-xl font-semibold text-richblack-5">Add Review</p>
+          <button onClick={() => setReviewModal(false)}>
+            <RxCross2 className="text-2xl text-richblack-5" />
+          </button>
         </div>
+        {/* Modal Body */}
+        <div className="p-6">
+          <div className="flex items-center justify-center gap-x-4">
+            <img
+              src={user?.image}
+              alt={user?.firstName + "profile"}
+              className="aspect-square w-[50px] rounded-full object-cover"
+            />
+            <div className="">
+              <p className="font-semibold text-richblack-5">
+                {user?.firstName} {user?.lastName}
+              </p>
+              <p className="text-sm text-richblack-5">Posting Publicly</p>
+            </div>
+          </div>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="mt-6 flex flex-col items-center"
+          >
+            <ReactStars
+              count={5}
+              onChange={RatingChanged}
+              size={24}
+              activeColor="#ffd700"
+            />
+            <div className="flex w-11/12 flex-col space-y-2">
+              <label
+                className="text-sm text-richblack-5"
+                htmlFor="courseExperience"
+              >
+                Add Your Experience <sup className="text-pink-200">*</sup>
+              </label>
+              <textarea
+                id="courseExperience"
+                placeholder="Add Your Experience"
+                {...register("courseExperience", { required: true })}
+                className="form-style resize-x-none min-h-[130px] w-full"
+              />
+              {errors.courseExperience && (
+                <span className="ml-2 text-xs tracking-wide text-pink-200">
+                  Please Add Your Experience
+                </span>
+              )}
+            </div>
+            <div className="mt-6 flex w-11/12 justify-end gap-x-2">
+              <button
+                onClick={() => setReviewModal(false)}
+                className={`flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-[8px] px-[20px] font-semibold text-richblack-900`}
+              >
+                Cancel
+              </button>
+              <IconBtn text="Save" />
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   )
 }

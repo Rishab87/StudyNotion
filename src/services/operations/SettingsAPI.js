@@ -22,7 +22,7 @@ export function updateDisplayPicture(token, formData) {
         formData,
         {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
+          Authorisation: `Bearer ${token}`,
         }
       )
       console.log(
@@ -48,18 +48,16 @@ export function updateProfile(token, formData) {
     const toastId = toast.loading("Loading...")
     try {
       const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, {
-        Authorization: `Bearer ${token}`,
+        Authorisation: `Bearer ${token}`,
       })
       console.log("UPDATE_PROFILE_API API RESPONSE............", response)
 
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
-      const userImage = response.data.updatedUserDetails.image
-        ? response.data.updatedUserDetails.image
-        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`
+
       dispatch(
-        setUser({ ...response.data.updatedUserDetails, image: userImage })
+        setUser({ ...response.data.data })
       )
       toast.success("Profile Updated Successfully")
     } catch (error) {
@@ -74,7 +72,7 @@ export async function changePassword(token, formData) {
   const toastId = toast.loading("Loading...")
   try {
     const response = await apiConnector("POST", CHANGE_PASSWORD_API, formData, {
-      Authorization: `Bearer ${token}`,
+      Authorisation: `Bearer ${token}`,
     })
     console.log("CHANGE_PASSWORD_API API RESPONSE............", response)
 
@@ -94,7 +92,7 @@ export function deleteProfile(token, navigate) {
     const toastId = toast.loading("Loading...")
     try {
       const response = await apiConnector("DELETE", DELETE_PROFILE_API, null, {
-        Authorization: `Bearer ${token}`,
+        Authorisation: `Bearer ${token}`,
       })
       console.log("DELETE_PROFILE_API API RESPONSE............", response)
 
