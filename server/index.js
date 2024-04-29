@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const courseRoutes = require('./routes/Course');
 const paymentRoutes = require('./routes/Payments');
 const profileRoutes = require('./routes/Profile');
+const fs = require('fs');
 const userRoutes = require('./routes/User');
 const contactRoutes = require('./routes/Contact')
 const dbConnect = require('./config/database');
@@ -43,9 +44,15 @@ app.use(
 
 app.use(express.json());
 app.use(cookieParser());
+
+const tempDir = '/temp';
+if (!fs.existsSync(tempDir)) {
+  fs.mkdirSync(tempDir, { recursive: true });
+}
+
 app.use(fileUploader({
     useTempFiles: true, 
-    tempFileDir: '/temp/'
+    tempFileDir: tempDir
 }));
 
 
