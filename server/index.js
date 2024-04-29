@@ -43,7 +43,7 @@ app.use(
   app.options('*', cors({
     origin: allowedOrigins,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allowable HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'],  // Headers allowed in preflight
+    allowedHeaders: ['Origin' , 'Content-Type', 'Authorization'],  // Headers allowed in preflight
     credentials: true,  // Allow credentials (cookies, tokens, etc.)
   }));
 
