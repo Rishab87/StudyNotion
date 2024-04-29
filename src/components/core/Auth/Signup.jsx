@@ -40,6 +40,7 @@ const Signup = () => {
       dispatch(sendOtp(formData.email , navigate));      
   }
 
+
   return (
     <div className='flex flex-row justify-center items-center w-full h-[92.3vh] mx-20'>
     <div className='w-11/12 flex flex-row h-[80%] flex-wrap'>
@@ -54,10 +55,10 @@ const Signup = () => {
 
             <div className='relative px-1 py-1 w-fit border-b-2 border-richblack-200 bg-richblack-800 text-richblack-200 rounded-full flex gap-8 font-semibold items-center justify-center'>
                 <label htmlFor="instructor" className={`cursor-pointer ${accType === "Instructor"? "text-richblack-5 bg-richblack-900": "text-richblack-200 bg-richblack-800"} rounded-full py-2 px-4 duration-200 transition-all`}>Instructor</label>
-                <input checked name='accountType' value="Instructor" type='radio' className='absolute invisible transition-all duration-200' id='instructor' onChange={(e)=> setAccType(e.target.value)}  required></input>
+                <input checked name='accountType' value="Instructor" type='radio' className='absolute invisible transition-all duration-200' id='instructor' onClick={()=> setAccType("Instructor")}  required></input>
 
                 <label htmlFor="student" className={`cursor-pointer ${accType === "Student"? "text-richblack-5 bg-richblack-900": "text-richblack-200 bg-richblack-800"} rounded-full py-2 px-4 duration-200 transition-all`}>Student</label>
-                <input name='accountType' value="Student" type='radio' className='absolute invisible transition-all duration-200' id='student' onChange={(e)=> setAccType(e.target.value)} required></input>
+                <input name='accountType' value="Student" type='radio' className='absolute invisible transition-all duration-200' id='student' onClick={()=> setAccType("Student")} required></input>
             </div>
 
             <div className='flex w-full gap-4'>
