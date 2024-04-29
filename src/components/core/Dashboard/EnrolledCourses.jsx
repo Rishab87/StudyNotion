@@ -22,7 +22,7 @@ const EnrolledCourses = () => {
       getEnrolledCourses();
   } ,[]);
 
-  const totalDuration = (enrolledCourses?.reduce((acc , curr)=> acc + curr.courseContent?.reduce((acc , curr)=> acc+ curr?.subSection?.reduce((acc , curr)=> acc + curr?.totalDuration , 0) , 0) , 0))/(60*60);
+  const totalDuration = enrolledCourses?.map((curr)=>curr.courseContent?.reduce((acc , curr)=> acc+ curr?.subSection?.reduce((acc , curr)=> acc + parseInt(curr?.totalDuration) , 0) , 0)/(60*60));
 
   const navigate = useNavigate();
   console.log(enrolledCourses);
@@ -76,7 +76,7 @@ const EnrolledCourses = () => {
                   </p>
                 </div>
               </div>
-              <div className="w-1/4 px-2 py-3">{totalDuration} hrs</div>
+              <div className="w-1/4 px-2 py-3">{totalDuration[i]} hrs</div>
               <div className="flex w-1/5 flex-col gap-2 px-2 py-3">
                 <p>Progress: {course.progressPercentage || 0}%</p>
                 <ProgressBar

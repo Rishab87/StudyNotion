@@ -39,7 +39,7 @@ export const createRating = async(data, token)=>{
 
     } catch(error){
         console.log(error);
-        toast.error(error.message);
+        toast.error(error.response.data.message);
     }
     toast.dismiss(toastId);
 }

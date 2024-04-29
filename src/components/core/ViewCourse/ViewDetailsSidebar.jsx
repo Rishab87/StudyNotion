@@ -125,7 +125,7 @@ const ViewDetailsSidebar = ({setReviewModal}) => {
                   >
                     <input
                       type="checkbox"
-                      checked={completedLectures.includes(topic?._id)}
+                      checked={completedLectures.find((data) => data._id === topic._id)}
                       onChange={() => {}}
                     />
                     {topic.title}

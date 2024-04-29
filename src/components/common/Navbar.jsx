@@ -157,6 +157,8 @@ function Navbar() {
           <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
         </button>
       </div>
+
+
     </div>
   )
 }

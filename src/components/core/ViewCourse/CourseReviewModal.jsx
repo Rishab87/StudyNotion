@@ -32,6 +32,7 @@ const CourseReviewModal = ({setReviewModal}) => {
             rating: data?.courseRating,
             review: data?.courseExperience , 
         } , token);
+        setReviewModal(false);
     }
 
     const RatingChanged = (newRating) => {
