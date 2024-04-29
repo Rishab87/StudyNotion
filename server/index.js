@@ -26,7 +26,7 @@ app.use(fileUploader({
 
 app.use(
     cors({
-        origin: "http://localhost:3000", //jo bhi request iss url se aa rhi hai(yeh frontend ka url hai) usse entertain krna hai
+        origin: "https://study-notion-7ztncalhu-rishabs-projects-2b908967.vercel.app/", //jo bhi request iss url se aa rhi hai(yeh frontend ka url hai) usse entertain krna hai
         credentials: true //iska matlab kya hai
         //explore aur kya add kr skte hai ismain
     })
