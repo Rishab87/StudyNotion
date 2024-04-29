@@ -17,13 +17,6 @@ const cors = require('cors'); //what? --> used for entertaining front end reques
 
 const PORT = process.env.PORT || 5000;
 
-app.use(express.json());
-app.use(cookieParser());
-app.use(fileUploader({
-    useTempFiles: true, 
-    tempFileDir: '/temp/'
-}));
-
 const allowedOrigins = ["https://study-notion-7ztncalhu-rishabs-projects-2b908967.vercel.app/" , "http://localhost:3000" , 'https://study-notion-git-main-rishabs-projects-2b908967.vercel.app/' , "https://study-notion-ebon-xi.vercel.app"];
 
 
@@ -46,6 +39,15 @@ app.use(
     allowedHeaders: ['Origin' , 'Content-Type', 'Authorization'],  // Headers allowed in preflight
     credentials: true,  // Allow credentials (cookies, tokens, etc.)
   }));
+
+
+app.use(express.json());
+app.use(cookieParser());
+app.use(fileUploader({
+    useTempFiles: true, 
+    tempFileDir: '/temp/'
+}));
+
 
 
 
