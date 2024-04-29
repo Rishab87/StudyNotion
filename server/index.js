@@ -26,9 +26,8 @@ app.use(fileUploader({
 
 app.use(
     cors({
-        origin: "https://study-notion-7ztncalhu-rishabs-projects-2b908967.vercel.app/", //jo bhi request iss url se aa rhi hai(yeh frontend ka url hai) usse entertain krna hai
-        credentials: true //iska matlab kya hai
-        //explore aur kya add kr skte hai ismain
+        origin: ["https://study-notion-7ztncalhu-rishabs-projects-2b908967.vercel.app" , "http://localhost:3000" , 'https://study-notion-git-main-rishabs-projects-2b908967.vercel.app/'], //jo bhi request iss url se aa rhi hai(yeh frontend ka url hai) usse entertain krna hai
+        credentials: true 
     })
 ) 
 
