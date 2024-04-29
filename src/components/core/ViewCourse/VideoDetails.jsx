@@ -12,6 +12,7 @@ import {toast} from 'react-hot-toast';
 const VideoDetails = () => {
 
     const {courseId , sectionId , subSectionId} = useParams();
+    const [previewSource, setPreviewSource] = useState("")
     const navigate = useNavigate();
     const dipatch = useDispatch();
     const playerRef = useRef();
@@ -40,6 +41,7 @@ const VideoDetails = () => {
             const filteredVideoData = filteredData[0]?.subSection.filter(subSection=> subSection._id === subSectionId);
 
             setVideoData(filteredVideoData?.[0]);
+            setPreviewSource(courseEntireData.thumbnail)
             setVideoEnded(false);
         }
     } , [location.pathname , courseSectionData , courseEntireData])
@@ -180,7 +182,7 @@ const VideoDetails = () => {
               {!isFirstVideo() && (
                 <button
                   disabled={loading}
-                  onClick={goToPrevVideo}
+                  onClick={goToPreviousVideo}
                   className="blackButton"
                 >
                   Prev

@@ -124,7 +124,7 @@ exports.updateDisplayPicture = async (req, res) => {
         2000,
         2000
       )
-      console.log(image)
+      // console.log(image)
       const updatedProfile = await User.findByIdAndUpdate(
         { _id: userId },
         { image: image.secure_url },

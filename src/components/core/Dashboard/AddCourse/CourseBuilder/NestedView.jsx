@@ -23,7 +23,7 @@ const NestedView = ({handleChangeEditSectionName}) => {
 
     const [confirmationModal , setConfirmationModal] = useState(null);
 
-    const handleDeleteSection = async(sectionId)=>{
+    const handleDeleleSection = async(sectionId)=>{
         const result = await deleteSection({
             sectionId,
             courseId: course._id,
@@ -178,7 +178,7 @@ const NestedView = ({handleChangeEditSectionName}) => {
     )}
     {/* Confirmation Modal */}
     {confirmationModal ? (
-      <ConfirmationModal modalData={confirmationModal} />
+      <ComfirmationModal modalData={confirmationModal} />
     ) : (
       <></>
     )}

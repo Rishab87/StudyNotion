@@ -277,7 +277,7 @@ const CourseInformationForm = () => {
     <div className="flex justify-end gap-x-2">
       {editCourse && (
         <button
-          onClick={() => dispatch(setStep(2))}
+          onClick={() => dispatch(setSteps(2))}
           disabled={loading}
           className={`flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-[8px] px-[20px] font-semibold text-richblack-900`}
         >

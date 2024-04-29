@@ -4,6 +4,7 @@ import rzpLogo from '../../assets/TimeLineLogo/Logo1.svg';
 import {apiConnector} from '../apiconnector';
 import {resetCart} from '../../slices/cartSlice';
 
+
 function loadScript(src){
     return new Promise((resolve)=>{
         const script = document.createElement('script');
@@ -57,11 +58,10 @@ export const buyCourse = async (token , courses , userDetails , navigate , dispa
 
     console.log(options);
 
-    const paymentObject = new Razorpay(options);
+    const paymentObject = new window.Razorpay(options);
     paymentObject.open();
     paymentObject.on('payment.failed' , function(response){
         toast.error("Payment failed");
-        console.log(error);
     })
 
     } catch(error){

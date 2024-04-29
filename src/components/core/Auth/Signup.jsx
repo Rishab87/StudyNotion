@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { setSignUpData } from '../../../slices/authSlice'
 import { sendOtp } from '../../../services/operations/authAPI'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 
 const Signup = () => {
 

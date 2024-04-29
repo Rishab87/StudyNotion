@@ -45,7 +45,7 @@ exports.createCourse = async(req , res)=>{
 
         //upload img to cloudinary
         const thumbnailImage = await uploadImageToCloudinary(thumbnail, process.env.FOLDER_NAME);
-        console.log(categoryDetails);
+        // console.log(categoryDetails);
         //create an entry for new course
         const newCourse = await Course.create({
             courseName,
@@ -58,7 +58,7 @@ exports.createCourse = async(req , res)=>{
             thumbnail: thumbnailImage.secure_url,
             status: "Draft",
         });
-        console.log(newCourse);
+        // console.log(newCourse);
 
         //instructor ki course list update
         await User.findByIdAndUpdate({_id:userId} , {$push:{courses: newCourse._id}} , {new: true});
