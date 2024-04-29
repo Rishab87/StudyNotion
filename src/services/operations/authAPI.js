@@ -114,7 +114,7 @@ export function loginToken(token , navigate){
         dispatch(setLoading(true));
         try{
 
-            const response = await apiConnector("POST" , endpoints.TOKEN_LOGIN , {} ,  {Authorisation: `Bearer ${token}`});
+            const response = await apiConnector("POST" , endpoints.TOKEN_LOGIN , {} ,  {Authorization: `Bearer ${token}`});
             if(!response.data.success){
                 throw new Error(response.data.message);
             }

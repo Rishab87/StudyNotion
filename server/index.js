@@ -24,12 +24,30 @@ app.use(fileUploader({
     tempFileDir: '/temp/'
 }));
 
+const allowedOrigins = ["https://study-notion-7ztncalhu-rishabs-projects-2b908967.vercel.app/" , "http://localhost:3000" , 'https://study-notion-git-main-rishabs-projects-2b908967.vercel.app/' , "https://study-notion-ebon-xi.vercel.app/"];
+
+
 app.use(
     cors({
-        origin: ["https://study-notion-7ztncalhu-rishabs-projects-2b908967.vercel.app/" , "http://localhost:3000" , 'https://study-notion-git-main-rishabs-projects-2b908967.vercel.app/' , "https://study-notion-ebon-xi.vercel.app/"], //jo bhi request iss url se aa rhi hai(yeh frontend ka url hai) usse entertain krna hai
-        credentials: true 
+      origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);  // Allow the origin
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+      credentials: true,  // If you're sending credentials
     })
-) 
+  );
+  
+  app.options('*', cors({
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],  // Allowable HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'],  // Headers allowed in preflight
+    credentials: true,  // Allow credentials (cookies, tokens, etc.)
+  }));
+
+
 
 dbConnect();
 cloudinaryConnect();

@@ -30,7 +30,7 @@ export const buyCourse = async (token , courses , userDetails , navigate , dispa
         throw new Error("Failed to load payment gateway");
        }
 
-       const orderRes = await apiConnector("POST" , studentEndpoints.COURSE_PAYMENT_API , {courses} , {Authorisation: `Bearer ${token}`});
+       const orderRes = await apiConnector("POST" , studentEndpoints.COURSE_PAYMENT_API , {courses} , {Authorization: `Bearer ${token}`});
 
        if(!orderRes.data.success){
         toast.error("Failed to create order");
@@ -77,7 +77,7 @@ export const buyCourse = async (token , courses , userDetails , navigate , dispa
 
 async function sendPaymentSuccessEmail(response , amount , token){
     try{
-        await apiConnector("POST" , studentEndpoints.SEND_PAYMENT_SUCCESS_EMAIL_API  , {orderId: response.razorpay_order_id ,amount ,  paymentId: response.razorpay_payment_id} ,{Authorisation: `Bearer ${token}`});
+        await apiConnector("POST" , studentEndpoints.SEND_PAYMENT_SUCCESS_EMAIL_API  , {orderId: response.razorpay_order_id ,amount ,  paymentId: response.razorpay_payment_id} ,{Authorization: `Bearer ${token}`});
 
     } catch(error){
         console.log("PAYMENT SUCCESS EMAIL ERROR:" , error);
@@ -87,7 +87,7 @@ async function sendPaymentSuccessEmail(response , amount , token){
 async function verfiyPayment(bodyData , token , navigate , dispatch){
     const toastId = toast.loading("Verifying payment...");
     try{
-        const res = await apiConnector("POST" , studentEndpoints.COURSE_VERIFY_API , bodyData , {Authorisation: `Bearer ${token}`});
+        const res = await apiConnector("POST" , studentEndpoints.COURSE_VERIFY_API , bodyData , {Authorization: `Bearer ${token}`});
 
         if(!res.data.success){
             throw new Error(res.data.message);

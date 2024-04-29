@@ -26,7 +26,7 @@ export const addCourseDetails = async(formData , token)=>{
     try{
         const response = await apiConnector("POST"  , courseEndpoints.CREATE_COURSE_API , formData, {
             "Content-Type": "multipart/form-data",
-            Authorisation: `Bearer ${token}`});
+            Authorization: `Bearer ${token}`});
 
         if(!response.data.success){
             throw new Error(response.data.message);
@@ -51,7 +51,7 @@ export const editCourseDetails = async (data, token) => {
     try {
       const response = await apiConnector("PUT", courseEndpoints.EDIT_COURSE_API, data, {
         "Content-Type": "multipart/form-data",
-        Authorisation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       })
       console.log("EDIT COURSE API RESPONSE............", response)
       if (!response?.data?.success) {
@@ -77,7 +77,7 @@ export const fetchCourseDetails = async (courseId , token) => {
         courseId,
       } , {
         "Content-Type": "multipart/form-data",
-        Authorisation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       })
       console.log("COURSE_DETAILS_API API RESPONSE............", response)
   
@@ -101,7 +101,7 @@ export const updateSection = async(data , token)=>{
   try{
 
     const response = await apiConnector("POST" , courseEndpoints.UPDATE_SECTION_API , data , {
-      Authorisation: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     });
 
     if(!response.data.success){
@@ -124,7 +124,7 @@ export const createSection = async(data , token)=>{
   let res = null;
   const toastId = toast.loading('loading...');
   try{
-    const response  = await apiConnector("POST" , courseEndpoints.CREATE_SECTION_API , data , {Authorisation: `Bearer ${token}`});
+    const response  = await apiConnector("POST" , courseEndpoints.CREATE_SECTION_API , data , {Authorization: `Bearer ${token}`});
 
     if(!response.data.success){
       throw new Error(res.data.message);
@@ -148,7 +148,7 @@ export const deleteSection = async(data, token)=>{
   let res  = null;
   try{
 
-    const response = await apiConnector("POST" , courseEndpoints.DELETE_SECTION_API , data , {Authorisation: `Bearer ${token}`})
+    const response = await apiConnector("POST" , courseEndpoints.DELETE_SECTION_API , data , {Authorization: `Bearer ${token}`})
 
     if(!response.data.success){
       throw new Error(response.data.message);
@@ -171,7 +171,7 @@ export const deleteSubSection = async(data, token)=>{
   let res  = null;
   try{
 
-    const response = await apiConnector("POST" , courseEndpoints.DELETE_SUBSECTION_API , data, {Authorisation: `Bearer ${token}`})
+    const response = await apiConnector("POST" , courseEndpoints.DELETE_SUBSECTION_API , data, {Authorization: `Bearer ${token}`})
 
     if(!response.data.success){
       throw new Error(response.data.message);
@@ -193,7 +193,7 @@ export const createSubSection = async(data, token)=>{
   let res  = null;
   try{
 
-    const response = await apiConnector("POST" , courseEndpoints.CREATE_SUBSECTION_API , data, {Authorisation: `Bearer ${token}`})
+    const response = await apiConnector("POST" , courseEndpoints.CREATE_SUBSECTION_API , data, {Authorization: `Bearer ${token}`})
 
     if(!response.data.success){
       throw new Error(response.data.message);
@@ -215,7 +215,7 @@ export const updateSubSection = async(data, token)=>{
   let res  = null;
   try{
 
-    const response = await apiConnector("POST" , courseEndpoints.UPDATE_SUBSECTION_API , data, {Authorisation: `Bearer ${token}`})
+    const response = await apiConnector("POST" , courseEndpoints.UPDATE_SUBSECTION_API , data, {Authorization: `Bearer ${token}`})
 
     if(!response.data.success){
       throw new Error(response.data.message);
@@ -237,7 +237,7 @@ export const fetchInstructorCourses = async(token)=>{
   let res  = null;
   try{
 
-    const response = await apiConnector("GET" , courseEndpoints.GET_ALL_INSTRUCTOR_COURSES_API , {}, {Authorisation: `Bearer ${token}`})
+    const response = await apiConnector("GET" , courseEndpoints.GET_ALL_INSTRUCTOR_COURSES_API , {}, {Authorization: `Bearer ${token}`})
 
     if(!response.data.success){
       throw new Error(response.data.message);
@@ -257,7 +257,7 @@ export const deleteCourse = async(data , token)=>{
   const toastId = toast.loading("loading...");
   let res  = null;  try{
 
-    const response = await apiConnector("POST" , courseEndpoints.DELETE_COURSE_API , data, {Authorisation: `Bearer ${token}`})
+    const response = await apiConnector("POST" , courseEndpoints.DELETE_COURSE_API , data, {Authorization: `Bearer ${token}`})
 
     if(!response.data.success){
       throw new Error(response.data.message);
@@ -276,7 +276,7 @@ export const markLectureAsComplete = async(data , token)=>{
   let result = []
   try{
 
-    const res = await apiConnector("POST" , courseEndpoints.LECTURE_COMPLETION_API , data ,{Authorisation: `Bearer ${token}`} );
+    const res = await apiConnector("POST" , courseEndpoints.LECTURE_COMPLETION_API , data ,{Authorization: `Bearer ${token}`} );
 
     if(!res.data.success){
       throw new Error(res.data.message);

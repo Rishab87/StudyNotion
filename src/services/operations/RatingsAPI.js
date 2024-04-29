@@ -29,7 +29,7 @@ export const createRating = async(data, token)=>{
     const toastId = toast.loading("loading...");
     try{
 
-        const res = await apiConnector("POST" , courseEndpoints.CREATE_RATING_API , data , {Authorisation: `Bearer ${token}`});
+        const res = await apiConnector("POST" , courseEndpoints.CREATE_RATING_API , data , {Authorization: `Bearer ${token}`});
 
         if(!res.data.success){
             throw new Error(res.data.message);
