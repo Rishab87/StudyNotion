@@ -24,13 +24,13 @@ app.use(fileUploader({
     tempFileDir: '/temp/'
 }));
 
-const allowedOrigins = ["https://study-notion-7ztncalhu-rishabs-projects-2b908967.vercel.app/" , "http://localhost:3000" , 'https://study-notion-git-main-rishabs-projects-2b908967.vercel.app/' , "https://study-notion-ebon-xi.vercel.app/"];
+const allowedOrigins = ["https://study-notion-7ztncalhu-rishabs-projects-2b908967.vercel.app/" , "http://localhost:3000" , 'https://study-notion-git-main-rishabs-projects-2b908967.vercel.app/' , "https://study-notion-ebon-xi.vercel.app"];
 
 
 app.use(
     cors({
       origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
           callback(null, true);  // Allow the origin
         } else {
           callback(new Error('Not allowed by CORS'));
